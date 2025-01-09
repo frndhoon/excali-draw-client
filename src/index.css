@@ -9,3 +9,33 @@
     font-family: 'Pretendard', system-ui, sans-serif;
   }
 }
+
+/* 체크된 라디오/체크박스 아이콘 스타일 수정 */
+.custom-styles
+  .excalidraw
+  .ToolIcon
+  .ToolIcon_type_radio:checked
+  + .ToolIcon__icon,
+.custom-styles
+  .excalidraw
+  .ToolIcon
+  .ToolIcon_type_checkbox:checked
+  + .ToolIcon__icon {
+  background: #1a73e8;
+  --keybinding-color: #ffffff;
+}
+
+/* 다크모드에서는 좀 더 밝은 파란색 사용 */
+.custom-styles
+  .excalidraw.theme--dark
+  .ToolIcon
+  .ToolIcon_type_radio:checked
+  + .ToolIcon__icon,
+.custom-styles
+  .excalidraw.theme--dark
+  .ToolIcon
+  .ToolIcon_type_checkbox:checked
+  + .ToolIcon__icon {
+  background: #4285f4;
+  --keybinding-color: #ffffff;
+}
