@@ -8,7 +8,7 @@ function App() {
         <p className="text-xl font-medium">grim-talk</p>
       </div>
       <div className="w-full h-full p-4">
-        <Excalidraw />
+        <Excalidraw langCode="ko-KR" />
       </div>
     </div>
   );
