@@ -1,13 +1,11 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
-
-@layer base {
-  html {
-    font-family: 'Pretendard', system-ui, sans-serif;
-  }
+* {
+  font-family: 'Pretendard';
 }
 
 /* 체크된 라디오/체크박스 아이콘 스타일 수정 */
@@ -38,14 +36,4 @@
   + .ToolIcon__icon {
   background: #4285f4;
   --keybinding-color: #ffffff;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-#root {
-  width: 100%;
-  height: 100vh;
 }
