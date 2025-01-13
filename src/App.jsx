@@ -10,6 +10,7 @@ function App() {
   const [isLeftBoard, setIsLeftBoard] = useState(true);
   const [leftExcalidrawAPI, setLeftExcalidrawAPI] = useState(null);
   const [rightExcalidrawAPI, setRightExcalidrawAPI] = useState(null);
+  const [isOverlayMode, setIsOverlayMode] = useState(false);
 
   const updateLeftScene = useCallback(() => {
     if (leftExcalidrawAPI) {
@@ -77,12 +78,28 @@ function App() {
     [isLeftBoard]
   );
 
+  const toggleOverlayMode = () => {
+    setIsOverlayMode(!isOverlayMode);
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <div style={{ display: 'flex', flex: 1 }}>
-        <div style={{ width: '50%', height: '100%' }}>
+        <div
+          style={{
+            width: isOverlayMode ? '100%' : '50%',
+            height: '100%',
+            position: 'relative',
+          }}
+        >
           <div className="text-center p-2 bg-blue-100">
             <h2>{isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
+            <button
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              onClick={toggleOverlayMode}
+            >
+              {isOverlayMode ? '겹치기 해제' : '겹치기'}
+            </button>
           </div>
           <Excalidraw
             onChange={onChangeLeft}
@@ -90,18 +107,41 @@ function App() {
             viewModeEnabled={!isLeftBoard}
             excalidrawAPI={(api) => setLeftExcalidrawAPI(api)}
           />
+          {isOverlayMode && (
+            <div
+              style={{
+                position: 'absolute',
+                top: '53px',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                opacity: 0.5,
+                pointerEvents: 'none',
+                zIndex: 1000,
+              }}
+            >
+              <Excalidraw
+                onChange={onChangeRight}
+                elements={rightElements}
+                viewModeEnabled={true}
+                excalidrawAPI={(api) => setRightExcalidrawAPI(api)}
+              />
+            </div>
+          )}
         </div>
-        <div style={{ width: '50%', height: '100%' }}>
-          <div className="text-center p-2 bg-blue-100">
-            <h2>{!isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
+        {!isOverlayMode && (
+          <div style={{ width: '50%', height: '100%' }}>
+            <div className="text-center p-2 bg-blue-100">
+              <h2>{!isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
+            </div>
+            <Excalidraw
+              onChange={onChangeRight}
+              elements={rightElements}
+              viewModeEnabled={isLeftBoard}
+              excalidrawAPI={(api) => setRightExcalidrawAPI(api)}
+            />
           </div>
-          <Excalidraw
-            onChange={onChangeRight}
-            elements={rightElements}
-            viewModeEnabled={isLeftBoard}
-            excalidrawAPI={(api) => setRightExcalidrawAPI(api)}
-          />
-        </div>
+        )}
       </div>
     </div>
   );
