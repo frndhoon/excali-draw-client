@@ -83,48 +83,62 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex flex-1">
+    <div className="flex flex-col h-screen overflow-hidden bg-gray-50">
+      <div className="flex flex-1 p-4 gap-4">
         <div
-          className={`${isOverlayMode ? 'w-full' : 'w-1/2'} h-full relative`}
+          className={`${
+            isOverlayMode ? 'w-full' : 'w-1/2'
+          } flex flex-col rounded-lg shadow-lg bg-white overflow-hidden`}
         >
-          <div className="text-center p-2 bg-blue-100">
-            <h2>{isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
+          <div className="text-center p-4 bg-gradient-to-r from-blue-500 to-blue-600">
+            <h2 className="text-white font-semibold text-lg mb-3">
+              {isLeftBoard ? '내 보드' : '다른 사용자의 보드'}
+            </h2>
             <button
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="px-6 py-2 bg-white text-blue-600 rounded-full font-medium
+                         transition-all duration-200 hover:bg-blue-50 hover:shadow-md
+                         active:transform active:scale-95"
               onClick={toggleOverlayMode}
             >
               {isOverlayMode ? '겹치기 해제' : '겹치기'}
             </button>
           </div>
-          <Excalidraw
-            onChange={onChangeLeft}
-            elements={leftElements}
-            viewModeEnabled={!isLeftBoard}
-            excalidrawAPI={(api) => setLeftExcalidrawAPI(api)}
-          />
+          <div className="flex-1">
+            <Excalidraw
+              onChange={onChangeLeft}
+              elements={leftElements}
+              viewModeEnabled={!isLeftBoard}
+              excalidrawAPI={(api) => setLeftExcalidrawAPI(api)}
+            />
+          </div>
           {isOverlayMode && (
-            <div className="absolute top-[53px] left-0 right-0 bottom-0 opacity-50 pointer-events-none z-[1000]">
-              <Excalidraw
-                onChange={onChangeRight}
-                elements={rightElements}
-                viewModeEnabled={true}
-                excalidrawAPI={(api) => setRightExcalidrawAPI(api)}
-              />
+            <div className="absolute top-[69px] left-0 right-0 bottom-0 opacity-50 pointer-events-none z-[1000]">
+              <div className="h-full">
+                <Excalidraw
+                  onChange={onChangeRight}
+                  elements={rightElements}
+                  viewModeEnabled={true}
+                  excalidrawAPI={(api) => setRightExcalidrawAPI(api)}
+                />
+              </div>
             </div>
           )}
         </div>
         {!isOverlayMode && (
-          <div className="w-1/2 h-full">
-            <div className="text-center p-2 bg-blue-100">
-              <h2>{!isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
+          <div className="w-1/2 flex flex-col rounded-lg shadow-lg bg-white overflow-hidden">
+            <div className="text-center p-4 bg-gradient-to-r from-blue-500 to-blue-600">
+              <h2 className="text-white font-semibold text-lg">
+                {!isLeftBoard ? '내 보드' : '다른 사용자의 보드'}
+              </h2>
             </div>
-            <Excalidraw
-              onChange={onChangeRight}
-              elements={rightElements}
-              viewModeEnabled={isLeftBoard}
-              excalidrawAPI={(api) => setRightExcalidrawAPI(api)}
-            />
+            <div className="flex-1">
+              <Excalidraw
+                onChange={onChangeRight}
+                elements={rightElements}
+                viewModeEnabled={isLeftBoard}
+                excalidrawAPI={(api) => setRightExcalidrawAPI(api)}
+              />
+            </div>
           </div>
         )}
       </div>
