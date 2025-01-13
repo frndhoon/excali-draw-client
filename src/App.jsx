@@ -83,14 +83,10 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <div style={{ display: 'flex', flex: 1 }}>
+    <div className="flex flex-col h-screen">
+      <div className="flex flex-1">
         <div
-          style={{
-            width: isOverlayMode ? '100%' : '50%',
-            height: '100%',
-            position: 'relative',
-          }}
+          className={`${isOverlayMode ? 'w-full' : 'w-1/2'} h-full relative`}
         >
           <div className="text-center p-2 bg-blue-100">
             <h2>{isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
@@ -108,18 +104,7 @@ function App() {
             excalidrawAPI={(api) => setLeftExcalidrawAPI(api)}
           />
           {isOverlayMode && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '53px',
-                left: 0,
-                right: 0,
-                bottom: 0,
-                opacity: 0.5,
-                pointerEvents: 'none',
-                zIndex: 1000,
-              }}
-            >
+            <div className="absolute top-[53px] left-0 right-0 bottom-0 opacity-50 pointer-events-none z-[1000]">
               <Excalidraw
                 onChange={onChangeRight}
                 elements={rightElements}
@@ -130,7 +115,7 @@ function App() {
           )}
         </div>
         {!isOverlayMode && (
-          <div style={{ width: '50%', height: '100%' }}>
+          <div className="w-1/2 h-full">
             <div className="text-center p-2 bg-blue-100">
               <h2>{!isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
             </div>
