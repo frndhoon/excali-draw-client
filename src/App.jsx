@@ -8,6 +8,22 @@ function App() {
   const [leftElements, setLeftElements] = useState([]);
   const [rightElements, setRightElements] = useState([]);
   const [isLeftBoard, setIsLeftBoard] = useState(true);
+  const [leftExcalidrawAPI, setLeftExcalidrawAPI] = useState(null);
+  const [rightExcalidrawAPI, setRightExcalidrawAPI] = useState(null);
+
+  const updateLeftScene = () => {
+    const leftSceneData = {
+      elements: leftElements,
+    };
+    leftExcalidrawAPI.updateScene(leftSceneData);
+  };
+
+  const updateRightScene = () => {
+    const rightSceneData = {
+      elements: rightElements,
+    };
+    rightExcalidrawAPI.updateScene(rightSceneData);
+  };
 
   useEffect(() => {
     socket.on('assignBoard', (board) => {
@@ -56,26 +72,44 @@ function App() {
   );
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ width: '50%', height: '100%' }}>
-        <div className="text-center p-2 bg-blue-100">
-          <h2>{isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <div style={{ display: 'flex', flex: 1 }}>
+        <div style={{ width: '50%', height: '100%' }}>
+          <div className="text-center p-2 bg-blue-100">
+            <h2>{isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
+          </div>
+          <Excalidraw
+            onChange={onChangeLeft}
+            elements={leftElements}
+            viewModeEnabled={!isLeftBoard}
+            excalidrawAPI={(api) => setLeftExcalidrawAPI(api)}
+          />
         </div>
-        <Excalidraw
-          onChange={onChangeLeft}
-          elements={leftElements}
-          viewModeEnabled={!isLeftBoard}
-        />
+        <div style={{ width: '50%', height: '100%' }}>
+          <div className="text-center p-2 bg-blue-100">
+            <h2>{!isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
+          </div>
+          <Excalidraw
+            onChange={onChangeRight}
+            elements={rightElements}
+            viewModeEnabled={isLeftBoard}
+            excalidrawAPI={(api) => setRightExcalidrawAPI(api)}
+          />
+        </div>
       </div>
-      <div style={{ width: '50%', height: '100%' }}>
-        <div className="text-center p-2 bg-blue-100">
-          <h2>{!isLeftBoard ? '내 보드' : '다른 사용자의 보드'}</h2>
-        </div>
-        <Excalidraw
-          onChange={onChangeRight}
-          elements={rightElements}
-          viewModeEnabled={isLeftBoard}
-        />
+      <div className="flex justify-center p-4 gap-4 mt-10">
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={updateLeftScene}
+        >
+          왼쪽 보드 업데이트
+        </button>
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={updateRightScene}
+        >
+          오른쪽 보드 업데이트
+        </button>
       </div>
     </div>
   );
