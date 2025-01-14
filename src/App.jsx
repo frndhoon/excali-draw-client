@@ -2,9 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Excalidraw } from '@excalidraw/excalidraw';
 import io from 'socket.io-client';
 
-const SERVER_URL = import.meta.env.PROD 
-  ? import.meta.env.VITE_PRODUCTION_URL 
-  : import.meta.env.VITE_SERVER_URL;
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const socket = io(SERVER_URL);
 
