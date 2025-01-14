@@ -82,6 +82,42 @@ function App() {
     setIsOverlayMode(!isOverlayMode);
   };
 
+  const mainBoard = isLeftBoard ? (
+    <div className="flex-1">
+      <Excalidraw
+        onChange={onChangeLeft}
+        elements={leftElements}
+        viewModeEnabled={!isLeftBoard}
+        excalidrawAPI={(api) => setLeftExcalidrawAPI(api)}
+      />
+    </div>
+  ) : (
+    <div className="flex-1">
+      <Excalidraw
+        onChange={onChangeRight}
+        elements={rightElements}
+        viewModeEnabled={isLeftBoard}
+        excalidrawAPI={(api) => setRightExcalidrawAPI(api)}
+      />
+    </div>
+  );
+
+  const overlayBoard = isLeftBoard ? (
+    <Excalidraw
+      onChange={onChangeRight}
+      elements={rightElements}
+      viewModeEnabled={true}
+      excalidrawAPI={(api) => setRightExcalidrawAPI(api)}
+    />
+  ) : (
+    <Excalidraw
+      onChange={onChangeLeft}
+      elements={leftElements}
+      viewModeEnabled={true}
+      excalidrawAPI={(api) => setLeftExcalidrawAPI(api)}
+    />
+  );
+
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-gray-50">
       <div className="flex flex-1 p-4 gap-4">
