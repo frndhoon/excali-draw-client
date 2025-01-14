@@ -2,7 +2,11 @@ import { useEffect, useState, useCallback } from 'react';
 import { Excalidraw } from '@excalidraw/excalidraw';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3001');
+const SERVER_URL = import.meta.env.PROD 
+  ? import.meta.env.VITE_PRODUCTION_URL 
+  : import.meta.env.VITE_SERVER_URL;
+
+const socket = io(SERVER_URL);
 
 function App() {
   const [leftElements, setLeftElements] = useState([]);
